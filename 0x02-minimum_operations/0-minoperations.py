@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+calculates the fewest number of operations needed
+to result in exactly n H characters in the file.
+"""
 
 global target
 global multiplier
@@ -6,6 +10,9 @@ global value
 global num_of_operations
     
 def copy():
+    """
+    copies a character
+    """
     global multiplier
     global value
     global num_of_operations
@@ -14,6 +21,9 @@ def copy():
     num_of_operations += 1
     
 def paste():
+    """
+    pastes copied characters
+    """
     global value
     global multiplier
     global num_of_operations
@@ -22,6 +32,7 @@ def paste():
     num_of_operations += 1
     
 def compare():
+    """Compares state"""
     global target
     global multiplier
     global value
@@ -48,6 +59,8 @@ def compare():
 
 
 def minOperations(n: int) -> int:
+    """calculates the fewest number of operations needed
+    to result in exactly n H characters in the file."""
     global target
     global multiplier
     global value
