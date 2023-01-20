@@ -12,6 +12,7 @@ line_count = 0
 size = 0
 codes = {}
 
+
 def log() -> None:
     """Logs stats"""
     global line_count
@@ -33,7 +34,7 @@ for line in sys.stdin:
         continue
     line_count += 1
     size += int(line_s[-1])
-    
+
     try:
         status_code = int(line_s[-2])
 
