@@ -4,26 +4,26 @@
 
 import sys
 
-global line_count
-global size
-global codes
+global LINE_COUNT
+global SIZE
+global CODES
 
-line_count = 0
-size = 0
-codes = {}
+LINE_COUNT = 0
+SIZE = 0
+CODES = {}
 
 
 def log() -> None:
     """Logs stats"""
-    global line_count
-    global size
-    global codes
+    global LINE_COUNT
+    global SIZE
+    global CODES
 
-    print("File size: {}".format(size))
-    keys = sorted(codes.keys())
+    print("File size: {}".format(SIZE))
+    keys = sorted(CODES.keys())
     for k in keys:
-        print(f"{k}: {codes[k]}")
-    line_count = 0
+        print(f"{k}: {CODES[k]}")
+    LINE_COUNT = 0
 
 
 for line in sys.stdin:
@@ -32,18 +32,18 @@ for line in sys.stdin:
     line_s = line.split(' ')
     if (len(line_s) != 9):
         continue
-    line_count += 1
-    size += int(line_s[-1])
+    LINE_COUNT += 1
+    SIZE += int(line_s[-1])
 
     try:
         status_code = int(line_s[-2])
 
         try:
-            curr = codes[status_code]
-            codes[status_code] = curr + 1
+            curr = CODES[status_code]
+            CODES[status_code] = curr + 1
         except KeyError:
-            codes[status_code] = 1
+            CODES[status_code] = 1
     except ValueError:
         continue
-    if line_count >= 10:
+    if LINE_COUNT >= 10:
         log()
