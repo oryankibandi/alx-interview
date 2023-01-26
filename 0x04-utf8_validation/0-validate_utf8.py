@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Valudates UTF-8 dataset"""
+"""Validates UTF-8 dataset"""
 
 
 import typing
@@ -16,7 +16,7 @@ def single_byte(num: int) -> bool:
 
 def is_continuation(num: int) -> bool:
     """checks if 1st and 2nd MSB 10xxxxxx are `1` and `0`"""
-    a = num >> 7  # check if 1st MSB 1xxxxxxx is `1`
+    a = num >> 7
     b = num >> 6
     if (a & 1 == 1 and (b & 1) == 0):
         return True
@@ -26,15 +26,14 @@ def is_continuation(num: int) -> bool:
 
 def count_bytes(num: int) -> int:
     """Counts the number of bytes
-
     Args:
         num (int): first byte
-
     Returns:
         int: Number of bytes
     """
     count = 0
     n = bin(num)[2:]
+
     for i in n:
         if int(i) == 1:
             count += 1
