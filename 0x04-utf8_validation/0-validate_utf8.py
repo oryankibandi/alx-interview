@@ -2,10 +2,7 @@
 """Validates UTF-8 dataset"""
 
 
-import typing
-
-
-def single_byte(num: int) -> bool:
+def single_byte(num):
     """Checks if a number indicates a single byte"""
     a = num >> 7
     if (a & 1 == 0):
@@ -14,7 +11,7 @@ def single_byte(num: int) -> bool:
         return False
 
 
-def is_continuation(num: int) -> bool:
+def is_continuation(num):
     """checks if 1st and 2nd MSB 10xxxxxx are `1` and `0`"""
     a = num >> 7
     b = num >> 6
@@ -24,7 +21,7 @@ def is_continuation(num: int) -> bool:
         return False
 
 
-def count_bytes(num: int) -> int:
+def count_bytes(num):
     """Counts the number of bytes
     Args:
         num (int): first byte
@@ -42,7 +39,7 @@ def count_bytes(num: int) -> int:
     return count
 
 
-def validUTF8(data: typing.List[int]) -> bool:
+def validUTF8(data):
     """Validates a utf-8 dataset"""
     index = 0
 
