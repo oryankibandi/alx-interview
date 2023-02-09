@@ -3,3 +3,9 @@
 
 # test files
 */*-main.py
+
+#Node modules
+**/node_modules/
+
+# package json
+package-*.json
