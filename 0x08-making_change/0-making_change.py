@@ -14,11 +14,12 @@ def makeChange(coins: list, total: int) -> int:
     while total > 0:
         if len(sorted_l) == 0:
             return -1
-        total -= max(sorted_l)
-        num_times += 1
-        if total == 0:
-            return num_times
-        if total < 0:
-            return -1
         if total < max(sorted_l):
             sorted_l.pop()
+        else:
+            total -= max(sorted_l)
+            num_times += 1
+            if total == 0:
+                return num_times
+            if total < 0:
+                return -1
