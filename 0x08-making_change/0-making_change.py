@@ -1,6 +1,10 @@
 #!/usr/bin/python3
+"""Make change interview task"""
 
-def makeChange(coins, total):
+
+def makeChange(coins: list, total: int) -> int:
+    """determines the fewest number of coins needed
+    to meet a given amount `total`"""
     if total <= 0:
         return -1
 
