@@ -1,76 +1,66 @@
 #!/usr/bin/python3
-"""Prime Game interviwe question
-"""
+'''Prime Game'''
 
 
-def is_prime(num: int) -> bool:
-    """
-    checks if a number is a prime
-    """
-    is_prime = True
+def isWinner(x, nums):
+    '''finds the winner'''
+    winnerCounter = {'Maria': 0, 'Ben': 0}
 
-    if num >= 2:
-        if num % 2 == 0:
-            is_prime = False
-    if num >= 3:
-        if num % 3 == 0:
-            is_prime = False
-    if num >= 5:
-        if num % 5 == 0:
-            is_prime = False
-    if num >= 7:
-        if num % 7 == 0:
-            is_prime = False
+    for i in range(x):
+        roundWinner = isRoundWinner(nums[i], x)
+        if roundWinner is not None:
+            winnerCounter[roundWinner] += 1
 
-    return is_prime
-
-
-def generate_nums(max: int) -> list[int]:
-    """
-    Generates a list of numbers from 1 to max
-    """
-
-    return [n for n in range(1, max + 1)]
-
-
-def remove_multiples(num: int, arr: list[int]) -> list[int]:
-    """removes multiples of a number"""
-    if arr is None or num is None:
-        return []
-
-    new_arr = []
-
-    for i in arr:
-        if i % num != 0:
-            new_arr.append(i)
-
-    return new_arr
-
-
-def isWinner(x: int, nums: list[int]) -> str | None:
-    """Gets the winner of a prime game"""
-    round = 1
-    maria_turn = True
-    maria_victories = 0
-    ben_victories = 0
-
-    for j in nums:
-        if round > x:
-            break
-        new_list = generate_nums(j)
-        for l_num in new_list:
-            if is_prime(l_num):
-                new_list = remove_multiples(l_num, new_list)
-                maria_turn = not maria_turn
-        if maria_turn:
-            maria_victories += 1
-        else:
-            ben_victories += 1
-        round += 1
-
-    if maria_victories > ben_victories:
+    if winnerCounter['Maria'] > winnerCounter['Ben']:
         return 'Maria'
-    elif maria_victories < ben_victories:
+    elif winnerCounter['Ben'] > winnerCounter['Maria']:
         return 'Ben'
     else:
         return None
+
+
+def isRoundWinner(n, x):
+    '''find round winner'''
+    list = [i for i in range(1, n + 1)]
+    players = ['Maria', 'Ben']
+
+    for i in range(n):
+        # get current player
+        currentPlayer = players[i % 2]
+        selectedIdxs = []
+        prime = -1
+        for idx, num in enumerate(list):
+            # if already picked prime num then
+            # find if num is multipl of the prime num
+            if prime != -1:
+                if num % prime == 0:
+                    selectedIdxs.append(idx)
+            # else check is num is prime then pick it
+            else:
+                if isPrime(num):
+                    selectedIdxs.append(idx)
+                    prime = num
+        # if failed to pick then current player lost
+        if prime == -1:
+            if currentPlayer == players[0]:
+                return players[1]
+            else:
+                return players[0]
+        else:
+            for idx, val in enumerate(selectedIdxs):
+                del list[val - idx]
+    return None
+
+
+def isPrime(n):
+    # 0, 1, even numbers greater than 2 are NOT PRIME
+    if n == 1 or n == 0 or (n % 2 == 0 and n > 2):
+        return False
+    else:
+        # Not prime if divisable by another number less
+        # or equal to the square root of itself.
+        # n**(1/2) returns square root of n
+        for i in range(3, int(n**(1/2))+1, 2):
+            if n % i == 0:
+                return "Not prime"
+        return True
