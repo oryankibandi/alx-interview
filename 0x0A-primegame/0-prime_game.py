@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Prime Game
+"""Prime Game interviwe question
 """
 
 
@@ -47,7 +47,7 @@ def remove_multiples(num: int, arr: list[int]) -> list[int]:
     return new_arr
 
 
-def isWinner(x: int, nums: list[int]):
+def isWinner(x: int, nums: list[int]) -> str | None:
     """Gets the winner of a prime game"""
     round = 1
     maria_turn = True
