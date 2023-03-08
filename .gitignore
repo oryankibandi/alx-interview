@@ -3,7 +3,7 @@
 
 # test files
 */*-main.py
-
+**/*_main.py
 #Node modules
 **/node_modules/
 
