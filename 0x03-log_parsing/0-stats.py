@@ -1,49 +1,37 @@
 #!/usr/bin/python3
-"""Reads lines in a file"""
+'''a script that reads stdin line by line and computes metrics'''
 
 
 import sys
 
-global LINE_COUNT
-global SIZE
-global CODES
+cache = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+total_size = 0
+counter = 0
 
-LINE_COUNT = 0
-SIZE = 0
-CODES = {}
+try:
+    for line in sys.stdin:
+        line_list = line.split(" ")
+        if len(line_list) > 4:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in cache.keys():
+                cache[code] += 1
+            total_size += size
+            counter += 1
 
+        if counter == 10:
+            counter = 0
+            print('File size: {}'.format(total_size))
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
 
-def log() -> None:
-    """Logs stats"""
-    global LINE_COUNT
-    global SIZE
-    global CODES
+except Exception as err:
+    pass
 
-    print("File size: {}".format(SIZE))
-    keys = sorted(CODES.keys())
-    for k in keys:
-        print(f"{k}: {CODES[k]}")
-    LINE_COUNT = 0
-
-
-for line in sys.stdin:
-    if 'Exit' == line.rstrip():
-        break
-    line_s = line.split(' ')
-    if (len(line_s) != 9):
-        continue
-    LINE_COUNT += 1
-    SIZE += int(line_s[-1])
-
-    try:
-        status_code = int(line_s[-2])
-
-        try:
-            curr = CODES[status_code]
-            CODES[status_code] = curr + 1
-        except KeyError:
-            CODES[status_code] = 1
-    except ValueError:
-        continue
-    if LINE_COUNT >= 10:
-        log()
+finally:
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(cache.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
